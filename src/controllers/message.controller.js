@@ -70,7 +70,7 @@ export const getMessages = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "fetched messages successfully",
-      data: conversation,
+      data: conversation || {},
     });
   } catch (err) {
     console.log(`[getMessages] Error while getting messages. ${err}`);
