@@ -1,8 +1,10 @@
-const express = require("express");
+import express from "express";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import indexRouter from "./src/routes/index.router.js";
+import connectToMongoDB from "./src/db/mongo.db.js";
+
 const app = express();
-const dotenv = require("dotenv");
-const morgan = require("morgan");
-const indexRouter = require("./src/routes/index.router");
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -15,6 +17,7 @@ app.use("/health-check", (req, res) => {
 dotenv.config();
 const port = process.env.PORT || 6666;
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await connectToMongoDB();
   console.log("Server running on port " + port + " 😁");
 });
